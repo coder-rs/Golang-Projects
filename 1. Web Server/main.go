@@ -21,12 +21,12 @@ func incrementCounter(w http.ResponseWriter, r *http.Request){
 	fmt.Fprintf(w, strconv.Itoa(counter))
 	mutex.Unlock()
 }
-
+func serveStaticFile(w http.ResponseWriter, r *http.Request){
+	http.ServeFile(w, r, r.URL.Path[1:])
+}
 func main(){
-	http.HandleFunc("/", echoString)
+	http.HandleFunc("/", serveStaticFile)
 	http.HandleFunc("/increment", incrementCounter)
-	
-
 	http.HandleFunc("/hi", func(w http.ResponseWriter, r *http.Request){
 		fmt.Fprintf(w, "Hi")
 	})
