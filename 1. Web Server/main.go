@@ -25,7 +25,8 @@ func serveStaticFile(w http.ResponseWriter, r *http.Request){
 	http.ServeFile(w, r, r.URL.Path[1:])
 }
 func main(){
-	http.HandleFunc("/", serveStaticFile)
+	//http.HandleFunc("/", serveStaticFile)
+	http.Handle("/", http.FileServer(http.Dir("./static")))
 	http.HandleFunc("/increment", incrementCounter)
 	http.HandleFunc("/hi", func(w http.ResponseWriter, r *http.Request){
 		fmt.Fprintf(w, "Hi")
